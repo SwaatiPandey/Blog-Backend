@@ -24,7 +24,11 @@ const getBlogById = (req, res) => {
   if (blogDisplay) {
     sendResponse(200, "Successful", [blogDisplay], req, res);
   } else {
-    sendError(new AppError(404, "Not Found", "task not available"), req, res);
+    sendErrorMessage(
+      new AppError(404, "Not Found", "task not available"),
+      req,
+      res
+    );
   }
 };
 
