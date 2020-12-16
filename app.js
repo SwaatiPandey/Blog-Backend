@@ -7,5 +7,5 @@ const { config } = require("process");
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/todoList", router);
+app.use("/blogs", router);
 app.listen(process.env.PORT, console.log(`app started on ${process.env.PORT}`));

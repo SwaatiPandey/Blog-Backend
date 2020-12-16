@@ -6,32 +6,27 @@ const Blogs = require("../models/blogs.js");
 const AppError = require("../helpers/appErrorClass");
 const sendErrorMessage = require("../helpers/sendError");
 const sendResponse = require("../helpers/sendResponse");
-const fileName = path.join(__dirname, "..", "data", "blog.json");
-const tasks = JSON.parse(fs.readFileSync(fileName, "utf-8"));
-
+const fileName = path.join(__dirname, "..", "data", "blogs.json");
+const blogs = JSON.parse(fs.readFileSync(fileName, "utf-8"));
+//get all blogs
 const getAllBlogs = (req, res, next) => {
-  sendResponse(200, "Successful", blogs, req, res);
-  Blog.find({})
-    .then((allBlogs) => {
-      console.log("All Blogs");
-      // console.log(allTasks);
-      sendResponse(200, "Successful", allBlogs, req, res);
-    })
-    .catch((err) => {
-      console.log(err);
+  let result = blogs.filter((blog) => {
+    return Object.keys(req.query).every((param) => {
+      return blog[param] == req.query[param];
     });
+  });
+  sendResponse(200, "Successful", result, req, res);
 };
-const getBlogById = (req, res, next) => {
-  sendResponse(200, "Successful", blogs, req, res);
-  Blog.find({ id })
-    .then((allBlogs) => {
-      console.log("All Blogs");
-      // console.log(allTasks);
-      sendResponse(200, "Successful", allBlogs, req, res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+//get one by id
+const getBlogById = (req, res) => {
+  const blogDisplay = blogs.find((blog) => {
+    return blog.id == req.params.id;
+  });
+  if (blogDisplay) {
+    sendResponse(200, "Successful", [blogDisplay], req, res);
+  } else {
+    sendError(new AppError(404, "Not Found", "task not available"), req, res);
+  }
 };
 
 module.exports.getAllBlogs = getAllBlogs;

@@ -1,5 +1,7 @@
 const express = require("express");
-const { getAllTasks } = require("../controllers/blogController");
+const { getAllBlogs, getBlogById } = require("../controllers/blogController");
 const router = express.Router();
-router.route("/blogs").get(getAllBlogs);
+router.route("/").get(getAllBlogs);
+router.route("/:id").get(getBlogById);
+
 module.exports = router;
