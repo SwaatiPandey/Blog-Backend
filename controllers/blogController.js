@@ -1,13 +1,12 @@
 const fs = require("fs");
 const path = require("path");
-// const mongoose = require("mongoose");
 const Blogs = require("../models/blogs.js");
-// const Blog = require("../models/blogSchema.js");
 const AppError = require("../helpers/appErrorClass");
 const sendErrorMessage = require("../helpers/sendError");
 const sendResponse = require("../helpers/sendResponse");
 const fileName = path.join(__dirname, "..", "data", "blogs.json");
 const blogs = JSON.parse(fs.readFileSync(fileName, "utf-8"));
+
 //get all blogs
 const getAllBlogs = (req, res, next) => {
   let result = blogs.filter((blog) => {
